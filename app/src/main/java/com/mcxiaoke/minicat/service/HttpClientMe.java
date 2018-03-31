@@ -24,8 +24,6 @@ public class HttpClientMe {
 
     //private final String TAG = "gebitang";
 
-
-
     public boolean postToWeibo(String txt, String token, String domain) throws IOException{
         DefaultHttpClient httpclient = new DefaultHttpClient();
 

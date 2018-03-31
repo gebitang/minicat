@@ -68,7 +68,7 @@ public class UIStatus extends UIBaseSupport {
     private TextView contentText;
     private ViewGroup contentPhoto;
     private ImageView imageView;
-    private GifImageView gifView;
+    //private GifImageView gifView;
     private TextView contentMetaInfo;
     private ImageButton imThread;
     private ImageButton imReply;
@@ -217,7 +217,7 @@ public class UIStatus extends UIBaseSupport {
         contentText = (TextView) findViewById(R.id.content_text);
         contentPhoto = (ViewGroup) findViewById(R.id.content_photo);
         imageView = (ImageView) findViewById(R.id.image);
-        gifView = (GifImageView) findViewById(R.id.gif);
+        //gifView = (GifImageView) findViewById(R.id.gif);
         contentMetaInfo = (TextView) findViewById(R.id.content_metainfo);
 
         imThread = (ImageButton) findViewById(R.id.thread_title);
@@ -323,7 +323,7 @@ public class UIStatus extends UIBaseSupport {
 
         contentPhoto.setVisibility(View.VISIBLE);
         imageView.setVisibility(View.VISIBLE);
-        gifView.setVisibility(View.GONE);
+        //gifView.setVisibility(View.GONE);
         String photoUrl = status.getPhotoLargeUrl().split("@")[0];
         loadBigImage(photoUrl);
     }
@@ -342,7 +342,7 @@ public class UIStatus extends UIBaseSupport {
 
             @Override
             public void onLoadingFailed(final String imageUri, final View view, final FailReason failReason) {
-                gifView.setVisibility(View.GONE);
+                //gifView.setVisibility(View.GONE);
                 imageView.setVisibility(View.VISIBLE);
                 imageView.setImageResource(R.drawable.photo_error);
             }
@@ -355,18 +355,18 @@ public class UIStatus extends UIBaseSupport {
         }
         if (imageUri.endsWith(".gif")) {
             imageView.setVisibility(View.GONE);
-            gifView.setVisibility(View.VISIBLE);
+            //gifView.setVisibility(View.VISIBLE);
             try {
                 final File file = ImageLoader.getInstance().getDiscCache().get(imageUri);
                 final GifDrawable drawable = new GifDrawable(file);
-                gifView.setImageDrawable(drawable);
+                //gifView.setImageDrawable(drawable);
             } catch (IOException e) {
-                gifView.setVisibility(View.GONE);
+                //gifView.setVisibility(View.GONE);
                 imageView.setVisibility(View.VISIBLE);
                 imageView.setImageResource(R.drawable.photo_error);
             }
         } else {
-            gifView.setVisibility(View.GONE);
+            //gifView.setVisibility(View.GONE);
             imageView.setVisibility(View.VISIBLE);
             imageView.setImageBitmap(bitmap);
         }

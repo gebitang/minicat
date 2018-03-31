@@ -205,7 +205,7 @@ public class GalleryFragment extends Fragment implements ViewPager.OnPageChangeL
         public Object instantiateItem(ViewGroup container, int position) {
             ViewGroup view = (ViewGroup) mInflater.inflate(R.layout.gallery_item_photo, container, false);
             final PhotoView imageView = (PhotoView) view.findViewById(R.id.photo);
-            final GifImageView gifImageView = (GifImageView) view.findViewById(R.id.gif);
+            final GifImageView gifImageView = new GifImageView(mContext);
             View vEmpty = view.findViewById(android.R.id.empty);
             final EmptyViewController emptyViewController = new EmptyViewController(vEmpty);
             final StatusModel model = mResources.get(position);

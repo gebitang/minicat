@@ -48,6 +48,7 @@ public class MenuFragment extends Fragment implements AdapterView.OnItemClickLis
     public static final int MENU_ID_LOGOUT = MENU_ID + 8;
     public static final int MENU_ID_OPTION = MENU_ID + 9;
     public static final int MENU_ID_ABOUT = MENU_ID + 10;
+    public static final int MENU_ID_SYNC = MENU_ID + 11;
     public static final int MENU_ID_DEBUG = MENU_ID + 99;
     private ViewGroup mHeaderView;
     private ImageView mHeaderImage;
@@ -237,8 +238,8 @@ public class MenuFragment extends Fragment implements AdapterView.OnItemClickLis
                 .id(MENU_ID_DIGEST).text("饭否语录")
                 .iconId(R.drawable.ic_item_digest).highlight(false).build();*/
 
-        MenuItemResource about = MenuItemResource.newBuilder()
-                .id(MENU_ID_ABOUT).text("关于").iconId(R.drawable.ic_item_info)
+        MenuItemResource sync = MenuItemResource.newBuilder()
+                .id(MENU_ID_SYNC).text("同步").iconId(R.drawable.ic_item_info)
                 .highlight(false).build();
 
         mMenuItems.add(home);
@@ -248,6 +249,7 @@ public class MenuFragment extends Fragment implements AdapterView.OnItemClickLis
 //        mMenuItems.add(drafts);
 //        mMenuItems.add(logout);
         mMenuItems.add(option);
+        mMenuItems.add(sync);
         // mMenuItems.add(theme);
 //        mMenuItems.add(blog);
 //        mMenuItems.add(about);

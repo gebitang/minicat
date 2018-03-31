@@ -143,4 +143,11 @@
     <string name="button_update_now">下载更新</string>
     <string name="button_update_later">以后再说</string>
 
+    <string name="weibo_token">token value</string>
+    <string name="append_url">custom domain</string>
+
+    <string name="tokenRef">token.data</string>
+    <string name="token_value">token.value</string>
+    <string name="domain_value">domain.value</string>
+
 </resources>

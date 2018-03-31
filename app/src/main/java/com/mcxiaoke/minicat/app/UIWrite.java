@@ -22,6 +22,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewConfiguration;
 import android.view.ViewGroup;
+import android.widget.CheckBox;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -83,6 +84,8 @@ public class UIWrite extends UIBaseSupport implements LoaderCallbacks<Cursor> {
     private int size;
     private ColorStateList mNormalTextColor;
     private ColorStateList mAlertTextColor;
+
+    private CheckBox doSync;
 
     private void log(String message) {
         Log.d(TAG, message);
@@ -376,6 +379,7 @@ public class UIWrite extends UIBaseSupport implements LoaderCallbacks<Cursor> {
         actionRecord = (ImageButton) findViewById(R.id.action_record);
         actionGallery = (ImageButton) findViewById(R.id.action_gallery);
         actionCamera = (ImageButton) findViewById(R.id.action_camera);
+        doSync = (CheckBox) findViewById(R.id.syncCheckbox);
 
         actionMention.setOnClickListener(this);
         actionRecord.setOnClickListener(this);
@@ -534,6 +538,7 @@ public class UIWrite extends UIBaseSupport implements LoaderCallbacks<Cursor> {
             Utils.notify(this, "消息内容不能为空");
             return;
         }
+        AppContext.setSyncSelect(doSync.isChecked());
         Utils.hideKeyboard(this, mAutoCompleteTextView);
         startSendService();
         finish();

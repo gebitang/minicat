@@ -50,6 +50,15 @@ public class AppContext extends Application {
     private static Api api;
     private static AppContext instance;
 
+    public static boolean isSyncSelect() {
+        return syncSelect;
+    }
+
+    public static void setSyncSelect(boolean syncSelect) {
+        AppContext.syncSelect = syncSelect;
+    }
+
+    private static boolean syncSelect;
     public static void doLogin(Context context) {
         if (DEBUG) {
             Log.v(TAG, "doLogin()");

@@ -26,4 +26,11 @@
         style="@style/ActionItem"
         android:src="@drawable/ic_camera" />
 
+    <CheckBox
+        android:id="@+id/syncCheckbox"
+        android:checked="true"
+        android:layout_width="0dp"
+        android:layout_height="48dp"
+        android:layout_weight="1" />
+
 </LinearLayout>

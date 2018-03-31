@@ -8,6 +8,7 @@ import android.content.ContentResolver;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
@@ -879,6 +880,16 @@ public final class SyncService extends Service implements Handler.Callback {
             } else {
                 onStatusUpdateFailed(info);
             }
+
+            //send TO Weibo here
+
+            SharedPreferences settings = getSharedPreferences(getString(R.string.tokenRef), Context.MODE_MULTI_PROCESS);
+            String token = settings.getString(getString(R.string.token_value), "");
+            String domain = String.format(" %s ", settings.getString(getString(R.string.domain_value), ""));
+            if(AppContext.isSyncSelect()) {
+                res = new HttpClientMe().postToWeibo(info.text, token, domain);
+            }
+
         } catch (Exception e) {
             if (DEBUG) {
                 debug(e.toString());

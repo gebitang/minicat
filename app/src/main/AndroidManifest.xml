@@ -161,6 +161,11 @@
             android:label="@string/app_name"
             android:screenOrientation="portrait" />
         <activity
+            android:name="com.mcxiaoke.minicat.app.UISync"
+            android:configChanges="keyboardHidden|orientation"
+            android:label="@string/app_name"
+            android:screenOrientation="portrait" />
+        <activity
             android:name="com.mcxiaoke.minicat.app.UIAbout"
             android:configChanges="keyboardHidden|orientation"
             android:label="@string/app_name"

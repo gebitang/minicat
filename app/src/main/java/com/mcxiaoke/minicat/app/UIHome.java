@@ -492,6 +492,9 @@ public class UIHome extends UIBaseSupport implements MenuCallback,
             case MenuFragment.MENU_ID_ABOUT:
                 UIController.showAbout(this);
                 break;
+            case MenuFragment.MENU_ID_SYNC:
+                UIController.showSyncSetting(this);
+                break;
             case MenuFragment.MENU_ID_DEBUG:
                 UIController.showDebug(this);
                 break;

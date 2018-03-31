@@ -31,6 +31,7 @@ dependencies {
     compile 'pl.droidsonroids.gif:android-gif-drawable:1.1.4'
     compile 'com.github.bumptech.glide:glide:3.7.0'
     compile 'com.mcxiaoke.xbus:bus:1.0.2'
+    //compile group: 'org.apache.httpcomponents' , name: 'httpclient-android' , version: '4.3.5.1'
 
     compile fileTree(dir: 'libs', include: ['*.jar'])
 }
@@ -44,8 +45,8 @@ android {
     defaultConfig {
         minSdkVersion 15
         targetSdkVersion 22
-        versionName "1.5.5"
-        versionCode 2016042201
+        versionName "3.2.5"
+        versionCode 20180326
         applicationId "com.mcxiaoke.minicat2"
     }
 
@@ -56,11 +57,19 @@ android {
 //            keyAlias project.ANDROID_KEY_ALIAS
 //            keyPassword project.ANDROID_KEY_PASSWORD
         }
+        // https://www.cnblogs.com/qianxudetianxia/p/4948499.html
+        // https://blog.csdn.net/innost/article/details/48228651
+        geb {
+            storeFile file(GEB_STORE_FILE)
+            storePassword GEB_STORE_PASSWORD
+            keyAlias GEB_KEY_ALIAS
+            keyPassword GEB_KEY_PASSWORD
+        }
     }
 
     buildTypes {
         release {
-            signingConfig signingConfigs.release
+            signingConfig signingConfigs.geb
             debuggable false
         }
 

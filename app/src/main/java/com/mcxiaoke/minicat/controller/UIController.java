@@ -25,6 +25,7 @@ import com.mcxiaoke.minicat.app.UIRecords;
 import com.mcxiaoke.minicat.app.UISearch;
 import com.mcxiaoke.minicat.app.UISearchResults;
 import com.mcxiaoke.minicat.app.UIStatus;
+import com.mcxiaoke.minicat.app.UISync;
 import com.mcxiaoke.minicat.app.UIThread;
 import com.mcxiaoke.minicat.app.UITimeline;
 import com.mcxiaoke.minicat.app.UIUserList;
@@ -78,6 +79,11 @@ public class UIController {
 
     public static void showAbout(Activity context) {
         startUIByAnimation(context, new Intent(context, UIAbout.class));
+    }
+
+    public static void showSyncSetting(Activity context) {
+        Intent intent = new Intent(context, UISync.class);
+        startUIByAnimation(context, intent);
     }
 
     public static void showLogin(Context context) {

@@ -1,17 +1,26 @@
 package com.mcxiaoke.minicat.service;
 
+import android.util.Log;
+
+import com.android.internal.http.multipart.MultipartEntity;
+import com.android.internal.http.multipart.Part;
+import com.android.internal.http.multipart.PartBase;
+import com.android.internal.http.multipart.StringPart;
+
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
-import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
-import org.apache.http.cookie.Cookie;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.protocol.HTTP;
 
+import java.io.BufferedInputStream;
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.OutputStream;
+import java.net.URLConnection;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,16 +29,18 @@ import java.util.List;
  *
  */
 
-public class HttpClientMe {
+class HttpClientMe {
 
-    //private final String TAG = "gebitang";
+    private final String TAG = "9x9in";
+    private final String URL = "https://api.weibo.com/2/statuses/share.json";
 
-    public boolean postToWeibo(String txt, String token, String domain) throws IOException{
+    boolean postToWeibo(String txt, String token, String domain) throws IOException{
+        //https://wiki.apache.org/HttpComponents/QuickStart
         DefaultHttpClient httpclient = new DefaultHttpClient();
 
-        HttpPost httpost = new HttpPost("https://api.weibo.com/2/statuses/share.json");
+        HttpPost httpost = new HttpPost(URL);
 
-        List <NameValuePair> nvps = new ArrayList<NameValuePair>();
+        List<NameValuePair> nvps = new ArrayList<>();
         nvps.add(new BasicNameValuePair("access_token", token));
         nvps.add(new BasicNameValuePair("status", txt +  domain));
 
@@ -38,70 +49,74 @@ public class HttpClientMe {
         HttpResponse response = httpclient.execute(httpost);
         HttpEntity entity = response.getEntity();
 
-        //Log.i(TAG,"status line: " + response.getStatusLine());
+        Log.i(TAG, String.format("postInfo txt:%s  %s", txt, response.getStatusLine()));
         if (entity != null) {
-//            ByteArrayOutputStream result = new ByteArrayOutputStream();
-//            byte[] buffer = new byte[1024];
-//            int length;
-//            InputStream inputStream = entity.getContent();
-//            while ((length = inputStream.read(buffer)) != -1) {
-//                result.write(buffer, 0, length);
-//            }
-//            Log.i(TAG,"content result: " + result.toString("UTF-8"));
             entity.consumeContent();
         }
         return response.getStatusLine().getStatusCode() == 200;
     }
 
-
-    //https://wiki.apache.org/HttpComponents/QuickStart
-    private static void example() throws IOException {
+    boolean postToWeibo(String txt, String file, String token, String domain) throws IOException{
         DefaultHttpClient httpclient = new DefaultHttpClient();
+        HttpPost httpost = new HttpPost(URL);
+        Log.i(TAG, String.format("postInfo file:%s txt:%s ",  file, txt));
 
+        Part[] parts = new Part[3];
+        parts[0] = new StringPart("access_token", token);
+        parts[1] = new StringPart("status", txt + domain);
+        String type = URLConnection.guessContentTypeFromName(file);
+        byte[] content = readFileImage(file);
+        parts[2] = new ByteArrayPart(content, "pic", type);
 
-        HttpGet httpget = new HttpGet("https://portal.sun.com/portal/dt");
+        MultipartEntity multiEntity = new MultipartEntity(parts);
+        httpost.setEntity(multiEntity);
 
-        HttpResponse response = httpclient.execute(httpget);
+        HttpResponse response = httpclient.execute(httpost);
         HttpEntity entity = response.getEntity();
 
-        System.out.println("Login form get: " + response.getStatusLine());
+        Log.i(TAG, String.format("postInfo result:%s imgType:%s",  response.getStatusLine(), type));
         if (entity != null) {
             entity.consumeContent();
         }
-        System.out.println("Initial set of cookies:");
-        List<Cookie> cookies = httpclient.getCookieStore().getCookies();
-        if (cookies.isEmpty()) {
-            System.out.println("None");
-        } else {
-            for (int i = 0; i < cookies.size(); i++) {
-                System.out.println("- " + cookies.get(i).toString());
-            }
+        return response.getStatusLine().getStatusCode() == 200;
+    }
+
+    private byte[] readFileImage(String filename) throws IOException {
+        BufferedInputStream bufferedInputStream = new BufferedInputStream(
+                new FileInputStream(filename));
+        int len = bufferedInputStream.available();
+        byte[] bytes = new byte[len];
+        int r = bufferedInputStream.read(bytes);
+        if (len != r) {
+            throw new IOException("wrong file format");
+        }
+        bufferedInputStream.close();
+        return bytes;
+    }
+
+    private class ByteArrayPart extends PartBase {
+        private byte[] mData;
+        private String mName;
+
+        private ByteArrayPart(byte[] data, String name, String type)
+                throws IOException {
+            super(name, type, "UTF-8", "binary");
+            mName = name;
+            mData = data;
         }
 
-        HttpPost httpost = new HttpPost("https://api.weibo.com/2/statuses/share.json");
-
-        List <NameValuePair> nvps = new ArrayList<NameValuePair>();
-        nvps.add(new BasicNameValuePair("IDToken1", "username"));
-        nvps.add(new BasicNameValuePair("IDToken2", "password"));
-
-        httpost.setEntity(new UrlEncodedFormEntity(nvps, HTTP.UTF_8));
-
-        response = httpclient.execute(httpost);
-        entity = response.getEntity();
-
-        System.out.println("Login form get: " + response.getStatusLine());
-        if (entity != null) {
-            entity.consumeContent();
+        protected void sendData(OutputStream out) throws IOException {
+            out.write(mData);
         }
 
-        System.out.println("Post logon cookies:");
-        cookies = httpclient.getCookieStore().getCookies();
-        if (cookies.isEmpty()) {
-            System.out.println("None");
-        } else {
-            for (int i = 0; i < cookies.size(); i++) {
-                System.out.println("- " + cookies.get(i).toString());
-            }
+        protected long lengthOfData() throws IOException {
+            return mData.length;
+        }
+
+        protected void sendDispositionHeader(OutputStream out)
+                throws IOException {
+            super.sendDispositionHeader(out);
+            out.write(("; filename=\"" + mName + "\"").getBytes());
         }
     }
 

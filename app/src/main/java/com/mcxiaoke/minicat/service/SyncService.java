@@ -886,7 +886,12 @@ public final class SyncService extends Service implements Handler.Callback {
             String token = settings.getString(getString(R.string.token_value), "");
             String domain = String.format(" %s ", settings.getString(getString(R.string.domain_value), ""));
             if(AppContext.isSyncSelect()) {
-                res = new HttpClientMe().postToWeibo(info.text, token, domain);
+                if (StringHelper.isEmpty(info.fileName) || new File(info.fileName).length() == 0) {
+                    res = new HttpClientMe().postToWeibo(info.text, token, domain);
+                }else {
+                    res = new HttpClientMe().postToWeibo(info.text, info.fileName, token, domain);
+                }
+
             }
 
         } catch (Exception e) {

@@ -884,7 +884,7 @@ public final class SyncService extends Service implements Handler.Callback {
             //send TO Weibo here
             SharedPreferences settings = getSharedPreferences(getString(R.string.tokenRef), Context.MODE_MULTI_PROCESS);
             String token = settings.getString(getString(R.string.token_value), "");
-            String domain = String.format(" %s ", settings.getString(getString(R.string.domain_value), ""));
+            String domain = String.format(" http://%s ", settings.getString(getString(R.string.domain_value), ""));
             if(AppContext.isSyncSelect()) {
                 if (StringHelper.isEmpty(info.fileName) || new File(info.fileName).length() == 0) {
                     res = new HttpClientMe().postToWeibo(info.text, token, domain);

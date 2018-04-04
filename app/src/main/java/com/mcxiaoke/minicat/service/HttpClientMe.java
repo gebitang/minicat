@@ -63,11 +63,13 @@ class HttpClientMe {
 
         Part[] parts = new Part[3];
         parts[0] = new StringPart("access_token", token);
-        parts[1] = new StringPart("status", txt + domain);
+        parts[1] = new StringPart("status", txt + domain, "UTF-8");
         String type = URLConnection.guessContentTypeFromName(file);
         byte[] content = readFileImage(file);
         parts[2] = new ByteArrayPart(content, "pic", type);
 
+//        HttpParams params = httpclient.getParams();
+//        params.setParameter(CoreProtocolPNames.HTTP_CONTENT_CHARSET, Charset.forName("UTF-8"));
         MultipartEntity multiEntity = new MultipartEntity(parts);
         httpost.setEntity(multiEntity);
 

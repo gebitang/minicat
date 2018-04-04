@@ -45,8 +45,8 @@ android {
     defaultConfig {
         minSdkVersion 15
         targetSdkVersion 22
-        versionName "3.2.5"
-        versionCode 20180326
+        versionName "3.25"
+        versionCode 20180404
         applicationId "com.mcxiaoke.minicat2"
     }
 

@@ -40,9 +40,9 @@ final class FanFouApi implements Api {
     private static final String TAG = "API";
     private static final String API_HOST = "http://api.fanfou.com";
     // e5dd03165aebdba16611e1f4849ce2c3 蘑菇饭
-    private static final String API_KEY = "46fef73b903b6c73e454dd99ecd8d8cb";
+    private static final String API_KEY = "38b3fe80b3b1bf068d125fbef0989eeb";
     // 2a14fcbdebfb936a769840b4d5a9263b 蘑菇饭
-    private static final String API_SECRET = "e0062818bc75fb2922b8016c43f11e7b";
+    private static final String API_SECRET = "ea7d91a97b9494e03e71f05cd1eb1e4b";
     private static final String CALLBACK_URL = "http://m.fanfou.com";
 
     private static final boolean DEBUG = AppContext.DEBUG;

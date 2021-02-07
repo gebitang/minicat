@@ -50,22 +50,22 @@ public final class IOHelper {
     }
 
     public static File getImageCacheDir(Context context) {
-        File cacheDir;
-        if (Environment.getExternalStorageState().equals(
-                Environment.MEDIA_MOUNTED)) {
-            cacheDir = new File(Environment.getExternalStorageDirectory(),
-                    "/Android/data/" + context.getPackageName() + "/photocache");
-        } else {
-            cacheDir = context.getCacheDir();
-        }
-        if (!cacheDir.exists()) {
-            cacheDir.mkdirs();
-            File nomedia = new File(cacheDir, ".nomedia");
-            if (!nomedia.exists()) {
-                nomedia.mkdirs();
-            }
-        }
-        return cacheDir;
+//        File cacheDir;
+//        if (Environment.getExternalStorageState().equals(
+//                Environment.MEDIA_MOUNTED)) {
+//            cacheDir = new File(Environment.getExternalStorageDirectory(),
+//                    "/Android/data/" + context.getPackageName() + "/photocache");
+//        } else {
+//            cacheDir = context.getCacheDir();
+//        }
+//        if (!cacheDir.exists()) {
+//            cacheDir.mkdirs();
+//            File nomedia = new File(cacheDir, ".nomedia");
+//            if (!nomedia.exists()) {
+//                nomedia.mkdirs();
+//            }
+//        }
+        return context.getExternalFilesDir( Environment.DIRECTORY_PICTURES);
     }
 
     public static File getPhotoFilePath(Context context) {
